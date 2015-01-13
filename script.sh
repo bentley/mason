@@ -35,14 +35,11 @@ function mason_prepare_compile {
 }
 
 function mason_compile {
-    mason_step "Loading install script 'https://github.com/mapbox/mason/blob/${MASON_SLUG}/patches.diff'..."
-    if [[ ! -f /Users/dane/projects/mason/gdal-dev/gdal-1.11.1-minimal.diff ]]; then
-        curl --retry 3 -s -f -# -L \
-          https://raw.githubusercontent.com/mapbox/mason/${MASON_SLUG}/patches.diff \
-          -O || (mason_error "Could not find patch for ${MASON_SLUG}" && exit 1)
-    else
-        patch -N -p1 < /Users/dane/projects/mason/gdal-dev/gdal-1.11.1-minimal.diff
-    fi
+    mason_step "Loading install script 'https://github.com/mapbox/mason/blob/${MASON_SLUG}/patch.diff'..."
+    curl --retry 3 -s -f -# -L \
+      https://raw.githubusercontent.com/mapbox/mason/${MASON_SLUG}/patch.diff \
+      -O || (mason_error "Could not find patch for ${MASON_SLUG}" && exit 1)
+    patch -N -p1 < /Users/dane/projects/mason/gdal-dev/patch.diff
     CUSTOM_LIBS="-L${MASON_TIFF}/lib -ltiff -L${MASON_JPEG}/lib -ljpeg -L${MASON_PROJ}/lib -lproj"
     # note: it might be tempting to build with --without-libtool
     # but I find that will only lead to a static libgdal.a and will
