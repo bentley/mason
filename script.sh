@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 MASON_NAME=libuv
-MASON_VERSION=0.11.29
+MASON_VERSION=1.x
 MASON_LIB_FILE=lib/libuv.a
 MASON_PKGCONFIG_FILE=lib/pkgconfig/libuv.pc
 
@@ -9,12 +9,12 @@ MASON_PKGCONFIG_FILE=lib/pkgconfig/libuv.pc
 
 function mason_load_source {
     mason_download \
-        https://github.com/joyent/libuv/archive/v0.11.29.tar.gz \
-        5bf49a8652f680557cbaf335a160187b2da3bf7f
+        https://github.com/ljbade/libuv-1/archive/fix-android-clock.tar.gz \
+        b21a1a05a5914fde9fa777f820a77809ae0a9dbe
 
     mason_extract_tar_gz
 
-    export MASON_BUILD_PATH=${MASON_ROOT}/.build/libuv-${MASON_VERSION}
+    export MASON_BUILD_PATH=${MASON_ROOT}/.build/libuv-1-fix-android-clock
 }
 
 function mason_prepare_compile {
